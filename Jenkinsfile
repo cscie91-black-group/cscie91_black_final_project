@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop $(sudo docker ps -aq); sudo docker run --rm --name web_server_dev -d -p 80:80 nginx'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop web_server_dev; sudo docker run --rm --name web_server_dev -d -p 80:80 nginx'"
                 }
                 sleep 2
             }
