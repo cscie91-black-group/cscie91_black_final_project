@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("pull-updates-to-dev"){
             when {
-                branch 'origin/dev'
+                branch 'dev'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
@@ -16,7 +16,7 @@ pipeline {
         
         stage("run-python-code-on-dev"){
              when {
-                branch 'origin/dev'
+                branch 'dev'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
@@ -28,7 +28,7 @@ pipeline {
         
         stage("deploy-on-dev"){
              when {
-                branch 'origin/dev'
+                branch 'dev'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
