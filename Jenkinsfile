@@ -50,6 +50,25 @@ pipeline {
             }
         }
         
+        stage("merge-dev-to-stage"){
+             when {
+                branch 'dev'
+            }
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'e91user', keyFileVariable: 'KEY_FILE')]) {
+                    sh '''
+                        eval `ssh-agent -s`
+                        ssh-add ${KEY_FILE}
+                        ssh-add -L
+                        git pull origin stage
+                        git commit --allow-empty -m "dev -> stage"
+                        git push origin stage
+                    '''
+                }
+                sleep 2
+            }
+        }
+        
         stage("pull-updates-to-stage"){
             when {
                 branch 'stage'
