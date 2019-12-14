@@ -74,5 +74,41 @@ pipeline {
                 sleep 2
             }
         }
+                
+        stage("pull-updates-to-prod"){
+            when {
+                branch 'master'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'git clone https://github.com/cscie91-black-group/cscie91_black_final_project.git; cd cscie91_black_final_project && git checkout . && git checkout master && git pull'"
+                }
+                sleep 2
+            }
+        }    
+        
+        stage("run-python-code-on-prod"){
+             when {
+                branch 'master'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'cd cscie91_black_final_project && python3.6 test.py'"
+                }
+                sleep 2
+            }
+        }
+        
+        stage("deploy-on-prod"){
+             when {
+                branch 'master'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'sudo docker stop web_server_prod; sudo docker run --rm --name web_server_prod -d -p 80:80 nginx'"
+                }
+                sleep 2
+            }
+        }
     }
 }
