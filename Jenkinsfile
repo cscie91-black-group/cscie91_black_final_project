@@ -1,5 +1,4 @@
 pipeline {
-    
     agent any
     
     stages {
@@ -27,13 +26,25 @@ pipeline {
             }
         }
         
+        stage("build-image-on-dev"){
+             when {
+                branch 'dev'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'cd cscie91_black_final_project && sudo docker build -t webserver:dev .'"
+                }
+                sleep 2
+            }
+        }
+        
         stage("deploy-on-dev"){
              when {
                 branch 'dev'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop web_server_dev; sudo docker run --rm --name web_server_dev -d -p 80:80 nginx'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop web_server_dev; sudo docker run --rm --name web_server_dev -d -p 80:80 webserver:dev'"
                 }
                 sleep 2
             }
@@ -63,13 +74,25 @@ pipeline {
             }
         }
         
+        stage("build-image-on-stage"){
+             when {
+                branch 'stage'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'cd cscie91_black_final_project && sudo docker build -t webserver:stage .'"
+                }
+                sleep 2
+            }
+        }
+        
         stage("deploy-on-stage"){
              when {
                 branch 'stage'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'sudo docker stop web_server_stage; sudo docker run --rm --name web_server_stage -d -p 80:80 nginx'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'sudo docker stop web_server_stage; sudo docker run --rm --name web_server_stage -d -p 80:80 webserver:stage'"
                 }
                 sleep 2
             }
@@ -99,13 +122,25 @@ pipeline {
             }
         }
         
+        stage("build-image-on-prod"){
+             when {
+                branch 'master'
+            }
+            steps {
+                sshagent (credentials: ['e91user']) {
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'cd cscie91_black_final_project && sudo docker build -t webserver:prod .'"
+                }
+                sleep 2
+            }
+        }
+        
         stage("deploy-on-prod"){
              when {
                 branch 'master'
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'sudo docker stop web_server_prod; sudo docker run --rm --name web_server_prod -d -p 80:80 nginx'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'sudo docker stop web_server_prod; sudo docker run --rm --name web_server_prod -d -p 80:80 webserver:prod'"
                 }
                 sleep 2
             }
