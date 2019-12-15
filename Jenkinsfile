@@ -64,7 +64,6 @@ pipeline {
                         git pull --all
                         git checkout dev
                         git pull origin stage
-                        git commit --allow-empty -m "dev -> stage"
                         git push origin dev:stage
                     '''
                 }
@@ -134,7 +133,6 @@ pipeline {
                         git pull --all
                         git checkout stage
                         git pull origin master
-                        git commit --allow-empty -m "stage -> master"
                         git push origin stage:master
                     '''
                 }
