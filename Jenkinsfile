@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'cd cscie91_black_final_project && python3.6 test.py'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'cd cscie91_black_final_project && python3.6 tests/test.py'"
                 }
                 sleep 2
             }
@@ -90,7 +90,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'cd cscie91_black_final_project && python3.6 test.py'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'cd cscie91_black_final_project && python3.6 tests/test.py'"
                 }
                 sleep 2
             }
@@ -160,7 +160,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'cd cscie91_black_final_project && python3.6 test.py'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'cd cscie91_black_final_project && python3.6 tests/test.py'"
                 }
                 sleep 2
             }
