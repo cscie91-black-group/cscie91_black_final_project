@@ -62,7 +62,7 @@ pipeline {
                         ssh-add -L
                         git pull origin stage
                         git commit --allow-empty -m "dev -> stage"
-                        git push git@github.com:cscie91-black-group/cscie91_black_final_project.git stage
+                        git push origin stage
                     '''
                 }
                 sleep 2
