@@ -61,9 +61,11 @@ pipeline {
                         ssh-add ${KEY_FILE}
                         test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
                         ssh-add -L
-                        git pull origin stage
-                        git commit --allow-empty -m "dev -> stage"
                         git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
+                        git pull --all
+                        git checkout dev
+                        git merge stage
+                        git commit --allow-empty -m "dev -> stage"
                         git push origin dev:stage
                     '''
                 }
