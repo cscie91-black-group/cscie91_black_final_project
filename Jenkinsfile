@@ -60,12 +60,11 @@ pipeline {
                         eval `ssh-agent -s`
                         ssh-add ${KEY_FILE}
                         test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
-                        ssh-add -L
                         git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
-                        git pull --all
+                        git fetch --all
                         git checkout dev
-                        git merge stage
-                        git commit --allow-empty -m "dev -> stage"
+                        git pull origin dev
+                        git pull origin stage
                         git push origin dev:stage
                     '''
                 }
@@ -116,6 +115,28 @@ pipeline {
             steps {
                 sshagent (credentials: ['e91user']) {
                     sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'sudo docker stop web_server_stage; sudo docker run --rm --name web_server_stage -d -p 80:80 webserver:stage'"
+                }
+                sleep 2
+            }
+        }
+        
+        stage("merge-stage-to-prod"){
+             when {
+                branch 'stage'
+            }
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'e91user', keyFileVariable: 'KEY_FILE')]) {
+                    sh '''
+                        eval `ssh-agent -s`
+                        ssh-add ${KEY_FILE}
+                        test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
+                        git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
+                        git fetch --all
+                        git checkout stage
+                        git pull origin stage
+                        git pull origin master
+                        git push origin stage:master
+                    '''
                 }
                 sleep 2
             }
