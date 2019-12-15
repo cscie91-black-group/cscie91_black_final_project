@@ -59,7 +59,7 @@ pipeline {
                     sh '''
                         eval `ssh-agent -s`
                         ssh-add ${KEY_FILE}
-                        ssh -o StrictHostKeyChecking=no -T git@github.com
+                        test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
                         ssh-add -L
                         git pull origin stage
                         git commit --allow-empty -m "dev -> stage"
