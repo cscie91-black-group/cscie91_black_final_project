@@ -59,9 +59,11 @@ pipeline {
                     sh '''
                         eval `ssh-agent -s`
                         ssh-add ${KEY_FILE}
+                        ssh -o StrictHostKeyChecking=no -T git@github.com
                         ssh-add -L
                         git pull origin stage
                         git commit --allow-empty -m "dev -> stage"
+                        git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
                         git push origin stage
                     '''
                 }
