@@ -61,8 +61,9 @@ pipeline {
                         ssh-add ${KEY_FILE}
                         test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
                         git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
-                        git pull --all
+                        git fetch --all
                         git checkout dev
+                        git pull origin dev
                         git pull origin stage
                         git push origin dev:stage
                     '''
@@ -130,8 +131,9 @@ pipeline {
                         ssh-add ${KEY_FILE}
                         test ! $(ssh -o StrictHostKeyChecking=no -T git@github.com)
                         git remote set-url origin git@github.com:cscie91-black-group/cscie91_black_final_project.git
-                        git pull --all
+                        git fetch --all
                         git checkout stage
+                        git pull origin stage
                         git pull origin master
                         git push origin stage:master
                     '''
