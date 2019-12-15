@@ -1,5 +1,9 @@
-# cscie91_black_final_project
-CSCI E91 Black Final Project
+# CSCIE-91 Cloud DevOps Final Project, 2019
+
+Black group:
+* Ethan Haynes
+* Sanu Ann Abraham
+* Jim DePina
 
 ## Run tests
 ```sh
