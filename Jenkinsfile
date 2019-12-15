@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop web_server_dev; sudo docker run --rm --name web_server_dev -d -p 80:80 webserver:dev'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@34.238.151.5 'sudo docker stop web_server_dev; sudo docker run --rm --name web_server_dev -d -p 80:80 webserver:dev && curl -I 34.238.151.5 | grep 200'"
                 }
                 sleep 2
             }
@@ -114,7 +114,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'sudo docker stop web_server_stage; sudo docker run --rm --name web_server_stage -d -p 80:80 webserver:stage'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@18.234.104.208 'sudo docker stop web_server_stage; sudo docker run --rm --name web_server_stage -d -p 80:80 webserver:stage && curl -I 18.234.104.208 | grep 200'"
                 }
                 sleep 2
             }
@@ -184,7 +184,7 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['e91user']) {
-                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'sudo docker stop web_server_prod; sudo docker run --rm --name web_server_prod -d -p 80:80 webserver:prod'"
+                    sh "ssh -o StrictHostKeyChecking=no e91user@35.199.9.219 'sudo docker stop web_server_prod; sudo docker run --rm --name web_server_prod -d -p 80:80 webserver:prod && curl -I 35.199.9.219 | grep 200'"
                 }
                 sleep 2
             }
