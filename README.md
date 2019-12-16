@@ -30,6 +30,10 @@ machines.
 
 ## Run tests
 ```sh
-$: python3 test.py 
-All tests passed
+$: python3 tests/test.py 
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.237s
+
+OK
 ```
