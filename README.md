@@ -25,7 +25,7 @@ push the merge. The push will trigger Jenkins to build the stage environment in 
 whether the HTML file(s) is/are valid.
 5. If all tests pass in dev and stage, Jenkins will merge stage with master and 
 trigger the production server to build from the new updated master.
-6. The sites (Prod, Dev and Stage) will all run on Docker containers on CentOS 7 
+6. The sites (Prod, Dev and Stage) will all run on Nginx Docker containers on CentOS 7 
 machines.
 
 ## Run tests
